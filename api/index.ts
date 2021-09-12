@@ -1,4 +1,5 @@
 import express from 'express';
+import routes  from './routes';
 const cors = require("cors");
 const app = express()
 const PORT = process.env.PORT || 3000;
@@ -19,7 +20,7 @@ app.use(express.json());
 app.use(cors());
 
 //centralizando todas as rotas
-app.use("/api", require("./routes"))
+app.use("/api", routes)
 
 
 

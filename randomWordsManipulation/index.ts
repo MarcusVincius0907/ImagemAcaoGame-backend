@@ -1,10 +1,10 @@
-const axios = require('axios');
+import axios from 'axios';
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
 const url = 'https://www.palabrasaleatorias.com/palavras-aleatorias.php?fs=5&fs2=0&Submit=Nova+palavra'
 
-async function getWords(){
+export default async function getWords(){
 
   try{
     const response  = await axios({
@@ -13,8 +13,9 @@ async function getWords(){
     })
   
     const dom = new JSDOM(response.data);
-    const words = []
-    dom.window.document.querySelectorAll("table > tbody > tr > td > div").forEach(div => {
+    const words: string[] = []
+    const divList: any[] = dom.window.document.querySelectorAll("table > tbody > tr > td > div")
+    divList.forEach(div => {
       if(div.textContent)
         words.push(
           div.textContent.replace('\n', '')
@@ -25,8 +26,4 @@ async function getWords(){
     throw err;
   }
 
-}
-
-module.exports = {
-  getWords
 }
