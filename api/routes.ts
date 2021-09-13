@@ -1,6 +1,8 @@
 import express from 'express';
-import controller from './controller'
+import Controllers from './controller'
 const routes = express.Router();
+
+const controller = new Controllers()
 
 //words
 routes.get("/words", controller.getWords);
@@ -18,7 +20,8 @@ routes.put("/team", controller.updateTeam);
 routes.delete("/team", controller.deleteTeam);
 
 //round
-routes.get("/round", controller.iniciarRodada);
+routes.get("/round", controller.startRound);
+routes.post("/round", controller.nextRound);
 
 
 export default routes;

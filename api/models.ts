@@ -23,6 +23,8 @@ export class Team {
   name: string;
   isTurn: boolean;
   players?: Player[];
+  currentPlayer?: Player;
+  lastPlayer?: Player;
   score?: number;
 }
 

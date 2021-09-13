@@ -1,0 +1,15 @@
+GET http://localhost:3000/api/round HTTP/1.1
+
+###
+
+POST http://localhost:3000/api/round HTTP/1.1
+content-type: application/json
+
+{
+    "score": "100",
+    "id": "0"
+}
+
+###
+
+GET http://localhost:3000/api/team HTTP/1.1
