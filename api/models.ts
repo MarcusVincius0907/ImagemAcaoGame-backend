@@ -2,13 +2,11 @@ export class Player{
   constructor(id:number = 0, name:string = 'Joao', teamId:number = 0){
     this.name = name
     this.id = id
-    this.isTurn = false
     this.teamId = teamId;
   }
   id: number;
   name: string;
   teamId: number;
-  isTurn: boolean;
 }
 
 export class Team {
@@ -36,18 +34,15 @@ export interface ResponseMessage {
 
 export class Round{
   constructor(
-    id: number,
     turnTeam: Team,
     turnPlayer: Player,
     score?: number,
   ){
-    this.id = id;
     this.turnTeam = turnTeam;
     this.turnPlayer = turnPlayer;
     this.score = score;
   }
 
-  id: number;
   turnTeam: Team;
   turnPlayer: Player;
   score?: number;

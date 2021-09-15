@@ -1,15 +1,20 @@
+### start round
+
 GET http://localhost:3000/api/round HTTP/1.1
 
-###
+### next round
 
 POST http://localhost:3000/api/round HTTP/1.1
 content-type: application/json
 
 {
-    "score": "100",
-    "id": "0"
+    "score": 100
 }
 
-###
+### history round
+
+GET http://localhost:3000/api/round-history HTTP/1.1
+
+### get teams
 
 GET http://localhost:3000/api/team HTTP/1.1

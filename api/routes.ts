@@ -22,6 +22,7 @@ routes.delete("/team", controller.deleteTeam);
 //round
 routes.get("/round", controller.startRound);
 routes.post("/round", controller.nextRound);
+routes.get("/round-history", controller.roundHistory);
 
 
 export default routes;
