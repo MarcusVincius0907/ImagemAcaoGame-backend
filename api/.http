@@ -18,3 +18,8 @@ GET http://localhost:3000/api/round-history HTTP/1.1
 ### get teams
 
 GET http://localhost:3000/api/team HTTP/1.1
+
+
+### get words
+
+GET http://localhost:3000/api/words HTTP/1.1

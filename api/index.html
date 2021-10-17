@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagem e ação</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <style>
+        body{
+            background-color: antiquewhite;
+            margin: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            font-size: 30px;
+            word-break: break-word;
+            font-weight: bold;
+        }
+        .container{
+            background-color: purple;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+        #btn{
+            background-color: #400740;
+            border: 0;
+            color: white;
+            font-size: 40px;
+            padding: 10px 45px;
+            border-radius: 10px;
+            margin-top: 28px;
+            cursor: pointer;
+        }
+        .placar{
+            background-color: #400740;
+            border: 0;
+            padding: 8px;
+            border-radius: 10px;
+            color: wheat;
+            font-size: 15px;
+        }
+        .loader{
+            position: absolute;
+            width: 100%;
+            background-color: #00000080;
+            text-align: center;
+            display: none;
+        }
+        .active{
+            display: block;
+        }
+        .flex{
+            display: flex;
+        }
+        .column{
+            flex-direction: column;
+        }
+        .mt-15{
+            margin-top: 15vh;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loader ">
+       <span> carregando...</span>
+    </div>
+ 
+    <div class="container mt-15">
+
+        <div class="flex column">
+            <label for="timea">TIME A</label>
+            <input class="placar" value="0" type="number" name="timea" id="timea">
+            <label for="timea">TIME B</label>
+            <input class="placar" value="0" type="number" name="timea" id="timea">
+        </div>
+        
+    </div>
+    <div class="container">
+
+        <div>
+            <ul  id="content">
+                <li>hello</li>
+            </ul>
+            
+        </div>
+        <div>
+            <button id="btn" >
+                click
+            </button>
+        </div>
+    </div>
+</body>
+<script>
+    let btn = document.querySelector('#btn');
+    let content = document.querySelector('#content');
+    let loader = document.querySelector('.loader');
+
+    btn.onclick = async() => {
+        loader.classList.add('active');
+        await getWords();
+        loader.classList.remove('active');
+    }
+
+    async function getWords(){
+        const response = await fetch('http://localhost:3000/api/words').then(res => 
+        {
+            
+            return res.json();
+        }).catch(e => {
+            console.log(e);
+        })
+        ;
+
+        console.log(response);
+        formatText(response)
+        //content.innerHTML = response
+    } 
+
+    function formatText(list){
+        let text = ''
+        list.forEach(element => {
+            text += `<li> ${element} </li>`
+        });
+        content.innerHTML = text
+    }
+</script>
+</html>

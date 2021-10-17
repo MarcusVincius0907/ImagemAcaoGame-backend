@@ -4,8 +4,19 @@ const cors = require("cors");
 const app = express()
 const PORT = process.env.PORT || 3000;
 
+const fs = require("fs");
+
+
 app.get('/', (req, res) => {
-  res.send('API is up!')
+  
+  fs.readFile('./api/index.html', function (err: any, html: any) {
+    if (err) {
+        throw err; 
+    }       
+     
+    res.write(html) 
+    res.end() 
+});
 })
 
 app.listen(PORT, () => {
