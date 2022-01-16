@@ -24,5 +24,8 @@ routes.get("/round", controller.startRound);
 routes.post("/round", controller.nextRound);
 routes.get("/round-history", controller.roundHistory);
 
+//scoreboard
+routes.get("/scoreboard", controller.scoreboard);
+
 
 export default routes;

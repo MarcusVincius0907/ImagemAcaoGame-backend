@@ -1,11 +1,59 @@
 
-import { Player, Team, Round, ResponseMessage } from "./models"
+import { Player, Team, Round, ResponseMessage, Scoreboard, RoundScoreInfo } from "./models"
 import getWords from '../randomWordsManipulation'
 
 let teams: Team[] = []
 let players: Player[] =  []
 let rounds: Round[] = []
 let flagRoundStarted = false;
+
+
+
+let scoreboard: Scoreboard | null = null
+
+function updateScoreboard(){
+    let totalTimeA = 0;
+    let totalTimeB = 0;
+    let roundsTimeA: RoundScoreInfo[] = [] as  RoundScoreInfo[]
+    let roundsTimeB: RoundScoreInfo[] = [] as  RoundScoreInfo[]
+
+    rounds.forEach((v,i,arr) => {
+
+        if(v.turnTeam.id === 0){
+            totalTimeA += v.score ?? 0;
+            roundsTimeA.push({roundNumber: i + 1, score: v.score ?? 0 })
+        }else if(v.turnTeam.id === 1){
+            totalTimeB += v.score ?? 0;
+            roundsTimeB.push({roundNumber: i + 1, score: v.score ?? 0 })
+        }
+
+
+    })
+
+    scoreboard = {
+        scoreInfo: [
+            { 
+                idTeam:0, 
+                total: totalTimeA,
+                rounds: roundsTimeA
+            },
+            { 
+                idTeam:1, 
+                total: totalTimeB,
+                rounds: roundsTimeB
+            }
+        ]
+    }
+
+    teams.map(v => {
+        if(v.id === 0)
+            return v.scoreInfo = scoreboard?.scoreInfo[0] ?? null
+
+        if(v.id === 1)
+            return v.scoreInfo = scoreboard?.scoreInfo[1] ?? null
+    })
+}
+
 
 function fillPlayers(){
     players.push(new Player(0, 'Denis', 0))
@@ -77,7 +125,7 @@ function saveHistory(round: Round){
 
 export default class Controllers {
 
-    /* words ---------------- */
+    //#region /* words ---------------- */
 
     async getWords(req: any, res: any){
         try{
@@ -88,7 +136,9 @@ export default class Controllers {
         }
     }
 
-    /* players ---------------- */
+    //#endregion
+
+    //#region  /* players ---------------- */
 
     async getPlayers(req: any, res: any){
         try{ 
@@ -134,8 +184,9 @@ export default class Controllers {
         }
     }
 
+    //#endregion
 
-    /* Teams ---------------- */
+    //#region  /* Teams ---------------- */
 
     async getTeams(req: any, res: any){
         try{
@@ -181,7 +232,11 @@ export default class Controllers {
         }
     }
 
-    /* Gerenciar rodadas */
+    //#endregion
+
+    //#region /* Gerenciar rodadas */
+
+    
 
     async startRound(req: any, res: any){
         try{
@@ -202,6 +257,9 @@ export default class Controllers {
 
     } 
 
+    
+    
+
     async nextRound(req: any, res: any){
         try{
             const score = req.body.score;
@@ -216,6 +274,7 @@ export default class Controllers {
 
             getTeamTurn()
             getPlayerTurn()
+            updateScoreboard()
 
             
             return res.json({status: 'Ok', message: 'Próximo Round', payload: {teams}} as ResponseMessage);
@@ -229,12 +288,26 @@ export default class Controllers {
         
     } 
 
+    
+
     async roundHistory(req: any, res: any){
         try{    
             if(rounds.length > 0)
                 return res.json({status: 'Ok', message: 'Rounds', payload: {rounds}} as ResponseMessage);
             else    
                 return res.json({status: 'Error', message: 'Não há nenhum round ainda'} as ResponseMessage);
+        }
+        catch(e){
+            console.log(e);
+            return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
+        }
+    }
+
+    //#endregion
+
+    async scoreboard(req: any, res: any){
+        try{    
+            return res.json({status: 'Ok', message: 'Scoreboard', payload: {scoreboard}} as ResponseMessage);
         }
         catch(e){
             console.log(e);

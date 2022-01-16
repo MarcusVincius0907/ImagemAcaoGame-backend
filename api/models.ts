@@ -16,6 +16,7 @@ export class Team {
     this.players = players;
     this.score = score;
     this.isTurn = false;
+    this.scoreInfo = null;
   }
   id: number;
   name: string;
@@ -24,6 +25,7 @@ export class Team {
   currentPlayer?: Player;
   lastPlayer?: Player;
   score?: number;
+  scoreInfo: ScoreInfo | null
 }
 
 export interface ResponseMessage {
@@ -46,4 +48,20 @@ export class Round{
   turnTeam: Team;
   turnPlayer: Player;
   score?: number;
+}
+
+
+export interface Scoreboard{
+  scoreInfo: ScoreInfo[]
+}
+
+interface ScoreInfo{
+  idTeam: number, 
+  total: number,
+  rounds: Array<RoundScoreInfo>
+}
+
+export interface RoundScoreInfo{
+  roundNumber: number,
+  score: number
 }
