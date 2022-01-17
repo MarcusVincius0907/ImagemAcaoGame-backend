@@ -1,5 +1,5 @@
 
-import { Player, Team, Round, ResponseMessage, Scoreboard, RoundScoreInfo } from "./models"
+import { Player, Team, Round, ResponseMessage, Scoreboard, RoundScoreInfo, Words } from "./models"
 import getWords from '../randomWordsManipulation'
 
 let teams: Team[] = []
@@ -130,7 +130,15 @@ export default class Controllers {
     async getWords(req: any, res: any){
         try{
             const words = await getWords()
-            return  res.json(words);
+            let resp: Words[] = [];
+            words.forEach((v,i)=> {
+                if(i > 0){
+                    resp.push({word: v, value: i * 10})
+                }else{
+                    resp.push({word: v, value: 5})
+                }
+            })
+            return  res.json({status: 'Ok', payload: resp} as ResponseMessage);
         }catch(err){
             res.json({status: 'Error', message: err} as ResponseMessage)
         }

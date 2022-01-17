@@ -65,3 +65,8 @@ export interface RoundScoreInfo{
   roundNumber: number,
   score: number
 }
+
+export interface Words{
+  word: string,
+  value: number,
+}
