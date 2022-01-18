@@ -168,7 +168,7 @@ export default class Controllers {
             return res.json({status: 'Ok', payload: players} as ResponseMessage);
         }
         catch(e){
-            console.log(e);
+            //console.log(e);
             return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
         }
     }
@@ -179,7 +179,7 @@ export default class Controllers {
             return res.json({status: 'Ok', message: 'Usuário salvo', payload: players} as ResponseMessage);
         }
         catch(e){
-            console.log(e);
+            //console.log(e);
             return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
         }
     }
@@ -190,7 +190,7 @@ export default class Controllers {
             return res.json({status: 'Ok', message: 'Usuario deletado', payload: players} as ResponseMessage);
         }
         catch(e){
-            console.log(e);
+            //console.log(e);
             return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
         }
     }
@@ -202,7 +202,7 @@ export default class Controllers {
             return res.json({status: 'Ok', message: 'Usuario atualizado', payload: players} as ResponseMessage);
         }
         catch(e){
-            console.log(e);
+            //console.log(e);
             return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
         }
     }
@@ -216,7 +216,7 @@ export default class Controllers {
             return res.json({status: 'Ok', payload: teams} as ResponseMessage);
         }
         catch(e){
-            console.log(e);
+            //console.log(e);
             return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
         }
     }
@@ -227,7 +227,7 @@ export default class Controllers {
             return res.json({status: 'Ok', message: 'Time salvo', payload: teams} as ResponseMessage);
         }
         catch(e){
-            console.log(e);
+            //console.log(e);
             return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
         }
     }
@@ -238,7 +238,7 @@ export default class Controllers {
             return res.json({status: 'Ok', message: 'Time deletado', payload: teams} as ResponseMessage);
         }
         catch(e){
-            console.log(e);
+            //console.log(e);
             return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
         }
     }
@@ -250,7 +250,7 @@ export default class Controllers {
             return res.json({status: 'Ok', message: 'Time atualizado', payload: teams} as ResponseMessage);
         }
         catch(e){
-            console.log(e);
+            //console.log(e);
             return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
         }
     }
@@ -274,7 +274,7 @@ export default class Controllers {
 
         }
         catch(e){
-            console.log(e);
+            //console.log(e);
             return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
         }    
 
@@ -304,7 +304,7 @@ export default class Controllers {
 
         }
         catch(e){
-            console.log(e);
+            //console.log(e);
             return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
         }
 
@@ -321,7 +321,7 @@ export default class Controllers {
                 return res.json({status: 'Error', message: 'Não há nenhum round ainda'} as ResponseMessage);
         }
         catch(e){
-            console.log(e);
+            //console.log(e);
             return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
         }
     }
@@ -333,7 +333,7 @@ export default class Controllers {
             return res.json({status: 'Ok', message: 'Scoreboard', payload: {scoreboard}} as ResponseMessage);
         }
         catch(e){
-            console.log(e);
+            //console.log(e);
             return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
         }
     }
@@ -344,7 +344,7 @@ export default class Controllers {
             return res.json({status: 'Ok', message: 'Turn', payload: {turn}} as ResponseMessage);
         }
         catch(e){
-            console.log(e);
+            //console.log(e);
             return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
         }
     }
