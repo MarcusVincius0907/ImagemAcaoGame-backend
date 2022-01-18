@@ -135,6 +135,9 @@ function saveHistory(round: Round){
     rounds.push(round);
 }
 
+getTeamTurn()
+getPlayerTurn()
+
 export default class Controllers {
 
     //#region /* words ---------------- */
@@ -261,8 +264,8 @@ export default class Controllers {
     async startRound(req: any, res: any){
         try{
             if(!flagRoundStarted){
-                getTeamTurn()
-                getPlayerTurn()
+                /* getTeamTurn()
+                getPlayerTurn() */
                 flagRoundStarted = true;
                 return res.json({status: 'Ok', message: 'Rodada iniciado', payload: {teams}} as ResponseMessage);
             }
