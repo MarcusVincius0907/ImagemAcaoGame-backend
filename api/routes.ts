@@ -27,5 +27,7 @@ routes.get("/round-history", controller.roundHistory);
 //scoreboard
 routes.get("/scoreboard", controller.scoreboard);
 
+//turn
+routes.get("/turn", controller.getTurn);
 
 export default routes;

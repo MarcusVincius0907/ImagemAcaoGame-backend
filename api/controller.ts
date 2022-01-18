@@ -1,10 +1,11 @@
 
-import { Player, Team, Round, ResponseMessage, Scoreboard, RoundScoreInfo, Words } from "./models"
+import { Player, Team, Round, ResponseMessage, Scoreboard, RoundScoreInfo, Words, Turn } from "./models"
 import getWords from '../randomWordsManipulation'
 
 let teams: Team[] = []
 let players: Player[] =  []
 let rounds: Round[] = []
+let turn: Turn | null = null;
 let flagRoundStarted = false;
 
 
@@ -52,6 +53,17 @@ function updateScoreboard(){
         if(v.id === 1)
             return v.scoreInfo = scoreboard?.scoreInfo[1] ?? null
     })
+}
+
+function updateTurn(){
+
+    let currentTeam = teams.filter(t => t.isTurn)[0];
+
+    turn = {
+        player:currentTeam?.currentPlayer,
+        team:{id:currentTeam?.id, name:currentTeam?.name},
+        round: (rounds.length + 1)
+    }
 }
 
 
@@ -322,6 +334,19 @@ export default class Controllers {
             return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
         }
     }
+
+    async getTurn(req: any, res: any){
+        try{    
+            updateTurn();
+            return res.json({status: 'Ok', message: 'Turn', payload: {turn}} as ResponseMessage);
+        }
+        catch(e){
+            console.log(e);
+            return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
+        }
+    }
+
+
 
     
 

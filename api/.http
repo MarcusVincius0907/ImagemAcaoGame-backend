@@ -27,3 +27,8 @@ GET http://localhost:3000/api/words HTTP/1.1
 ### get players
 
 GET http://localhost:3000/api/players HTTP/1.1
+
+
+### get turn
+
+GET http://localhost:3000/api/turn HTTP/1.1

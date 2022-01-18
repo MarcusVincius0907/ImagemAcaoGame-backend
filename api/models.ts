@@ -70,3 +70,16 @@ export interface Words{
   word: string,
   value: number,
 }
+
+export interface Turn{
+  
+  player?: Player,
+  team: TurnTeam,
+  round: number
+
+}
+
+interface TurnTeam{
+  id:number,
+  name?: string,
+}
