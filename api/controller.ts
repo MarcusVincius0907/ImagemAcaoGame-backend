@@ -7,9 +7,6 @@ let players: Player[] =  []
 let rounds: Round[] = []
 let turn: Turn | null = null;
 let flagRoundStarted = false;
-
-
-
 let scoreboard: Scoreboard | null = null
 
 function updateScoreboard(){
@@ -66,7 +63,6 @@ function updateTurn(){
     }
 }
 
-
 function fillPlayers(){
     players.push(new Player(0, 'Denis', 0))
     players.push(new Player(1, 'Joao', 0))
@@ -79,14 +75,10 @@ function fillPlayers(){
     players.push(new Player(3, 'Gustavo', 1))
 }
 
-fillPlayers();
-
 function fillTeams(){
     teams.push(new Team(0, 'Time A', players.slice(0, 4), 0))
     teams.push(new Team(1, 'Time B', players.slice(4, 8), 0))
 }
-
-fillTeams();
 
 function getTeamTurn(){
     let current = teams.filter(t => t.isTurn)
@@ -135,6 +127,8 @@ function saveHistory(round: Round){
     rounds.push(round);
 }
 
+fillPlayers();
+fillTeams();
 getTeamTurn()
 getPlayerTurn()
 
