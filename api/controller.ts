@@ -335,7 +335,7 @@ export default class Controllers {
     async getTurn(req: any, res: any){
         try{    
             updateTurn();
-            return res.json({status: 'Ok', message: 'Turn', payload: {turn}} as ResponseMessage);
+            return res.json({status: 'Ok', message: 'Turn', payload: turn} as ResponseMessage);
         }
         catch(e){
             //console.log(e);
