@@ -1,6 +1,7 @@
 
 import { Player, Team, Round, ResponseMessage, Scoreboard, RoundScoreInfo, Words, Turn } from "./models"
 import getWords from '../randomWordsManipulation'
+import config from './config'
 
 let teams: Team[] = []
 let players: Player[] =  []
@@ -133,6 +134,8 @@ getTeamTurn()
 getPlayerTurn()
 
 export default class Controllers {
+
+    //#region home
 
     //#region /* words ---------------- */
 
@@ -343,7 +346,19 @@ export default class Controllers {
         }
     }
 
+    //#endregion
 
+    //#region config
+    async getGeneralConfig(req: any, res: any){
+        try{    
+            return res.json({status: 'Ok', message: 'Turn', payload: JSON.parse(config)} as ResponseMessage);
+        }
+        catch(e){
+            //console.log(e);
+            return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
+        }
+    }
+    //#endregion
 
     
 

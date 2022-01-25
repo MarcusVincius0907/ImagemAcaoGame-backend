@@ -30,4 +30,7 @@ routes.get("/scoreboard", controller.scoreboard);
 //turn
 routes.get("/turn", controller.getTurn);
 
+//config
+routes.get("/config", controller.getGeneralConfig);
+
 export default routes;
