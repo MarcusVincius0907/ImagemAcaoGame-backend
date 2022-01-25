@@ -1,20 +1,20 @@
-const config = ` [
+const gameConfigFile = ` [
   {
     "title": "Tempo da mimica",
     "items": [
       {
         "id": 0,
-        "name": "1m",
+        "value": 1,
         "selected": true
       },
       {
         "id": 1,
-        "name": "2m",
+        "value": 2,
         "selected": false
       },
       {
         "id": 2,
-        "name": "5m",
+        "value": 5,
         "selected": false
       }
     ]
@@ -24,17 +24,17 @@ const config = ` [
     "items": [
       {
         "id": 0,
-        "name": "5",
+        "value": 5,
         "selected": true
       },
       {
         "id": 1,
-        "name": "10",
+        "value": 10,
         "selected": false
       },
       {
         "id": 2,
-        "name": "15",
+        "value": 20,
         "selected": false
       }
     ]
@@ -44,21 +44,21 @@ const config = ` [
     "items": [
       {
         "id": 0,
-        "name": "3",
+        "value": 3,
         "selected": true
       },
       {
         "id": 1,
-        "name": "5",
+        "value": 5,
         "selected": false
       },
       {
         "id": 2,
-        "name": "10",
+        "value": 10,
         "selected": false
       }
     ]
   }
 ]`
 
-export default config;
+export default gameConfigFile;

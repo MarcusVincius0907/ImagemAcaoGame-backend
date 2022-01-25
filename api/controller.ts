@@ -1,7 +1,7 @@
 
-import { Player, Team, Round, ResponseMessage, Scoreboard, RoundScoreInfo, Words, Turn } from "./models"
+import { Player, Team, Round, ResponseMessage, Scoreboard, RoundScoreInfo, Words, Turn, Configuration, GameConfig } from "./models"
 import getWords from '../randomWordsManipulation'
-import config from './config'
+import gameConfigFile from './gameConfig'
 
 let teams: Team[] = []
 let players: Player[] =  []
@@ -9,6 +9,24 @@ let rounds: Round[] = []
 let turn: Turn | null = null;
 let flagRoundStarted = false;
 let scoreboard: Scoreboard | null = null
+let configFile: GameConfig[] = JSON.parse(gameConfigFile)
+let configuration: Configuration | null = null
+
+function startUpConfig(config: GameConfig[]){
+
+    if(config){
+        let time = config[0].itens.filter(v => v.selected)[0].value;
+        let roundQtd = config[1].itens.filter(v => v.selected)[0].value;
+        let wordsQtd = config[2].itens.filter(v => v.selected)[0].value;
+    
+        configuration = {
+            time,
+            wordsQtd,
+            roundQtd
+        }
+    }
+
+}
 
 function updateScoreboard(){
     let totalTimeA = 0;
@@ -141,7 +159,7 @@ export default class Controllers {
 
     async getWords(req: any, res: any){
         try{
-            const words = await getWords()
+            const words = await getWords(configuration?.wordsQtd)
             let resp: Words[] = [];
             words.forEach((v,i)=> {
                 if(i > 0){
@@ -261,8 +279,7 @@ export default class Controllers {
     async startRound(req: any, res: any){
         try{
             if(!flagRoundStarted){
-                /* getTeamTurn()
-                getPlayerTurn() */
+                startUpConfig(req.body?.config ?? null)
                 flagRoundStarted = true;
                 return res.json({status: 'Ok', message: 'Rodada iniciado', payload: {teams}} as ResponseMessage);
             }
@@ -292,9 +309,14 @@ export default class Controllers {
                 saveHistory(round)
             }
 
+            updateScoreboard()
+
+            if(configuration?.roundQtd === rounds.length){
+                return res.json({status: 'Ok', message: 'Partida Finalizada', payload: null} as ResponseMessage);
+            }
+
             getTeamTurn()
             getPlayerTurn()
-            updateScoreboard()
 
             
             return res.json({status: 'Ok', message: 'Próximo Round', payload: {teams}} as ResponseMessage);
@@ -346,12 +368,13 @@ export default class Controllers {
         }
     }
 
+
     //#endregion
 
     //#region config
     async getGeneralConfig(req: any, res: any){
         try{    
-            return res.json({status: 'Ok', message: 'Turn', payload: JSON.parse(config)} as ResponseMessage);
+            return res.json({status: 'Ok', message: 'Turn', payload: configFile} as ResponseMessage);
         }
         catch(e){
             //console.log(e);

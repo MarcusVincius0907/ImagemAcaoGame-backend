@@ -23,6 +23,11 @@ GET http://localhost:3000/api/team HTTP/1.1
 ### get words
 
 GET http://localhost:3000/api/words HTTP/1.1
+content-type: application/json
+
+{
+    "wordsQtd": 3
+}
 
 ### get players
 

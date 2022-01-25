@@ -83,3 +83,15 @@ interface TurnTeam{
   id:number,
   name?: string,
 }
+
+
+export interface Configuration{
+  wordsQtd: number,
+  roundQtd: number,
+  time: number
+}
+
+export interface GameConfig{
+  title: string,
+  itens: [{id: number, value: number, selected: boolean}]
+}
