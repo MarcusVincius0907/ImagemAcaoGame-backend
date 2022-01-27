@@ -1,5 +1,6 @@
 const gameConfigFile = ` [
   {
+    "value":"time",
     "title": "Tempo da mimica",
     "items": [
       {
@@ -20,6 +21,7 @@ const gameConfigFile = ` [
     ]
   },
   {
+    "value":"roundQtd",
     "title": "Quantidade de rodadas",
     "items": [
       {
@@ -40,6 +42,7 @@ const gameConfigFile = ` [
     ]
   },
   {
+    "value":"wordsQtd",
     "title": "Quantidade de palavras",
     "items": [
       {
