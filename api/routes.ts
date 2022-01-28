@@ -21,8 +21,8 @@ routes.put("/team", controller.updateTeams);
 routes.delete("/team", controller.deleteTeam);
 
 //round
-routes.get("/round", controller.startRound);
-routes.post("/round", controller.nextRound);
+routes.post("/round-start", controller.startRound);
+routes.post("/round-next", controller.nextRound);
 routes.get("/round-history", controller.roundHistory);
 
 //scoreboard
@@ -33,5 +33,8 @@ routes.get("/turn", controller.getTurn);
 
 //config
 routes.get("/config", controller.getGeneralConfig);
+
+//reset
+routes.get("/reset", controller.reset);
 
 export default routes;

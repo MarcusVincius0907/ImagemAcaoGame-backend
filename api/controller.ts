@@ -12,18 +12,10 @@ let scoreboard: Scoreboard | null = null
 let configFile: GameConfig[] = JSON.parse(gameConfigFile)
 let configuration: Configuration | null = null
 
-function startUpConfig(config: GameConfig[]){
+function startUpConfig(config: Configuration){
 
     if(config){
-        let time = config[0].itens.filter(v => v.selected)[0].value;
-        let roundQtd = config[1].itens.filter(v => v.selected)[0].value;
-        let wordsQtd = config[2].itens.filter(v => v.selected)[0].value;
-    
-        configuration = {
-            time,
-            wordsQtd,
-            roundQtd
-        }
+        configuration = config
     }
 
 }
@@ -152,10 +144,19 @@ function saveHistory(round: Round){
     rounds.push(round);
 }
 
-fillPlayers();
-fillTeams();
-/* getTeamTurn()
-getPlayerTurn() */
+function resetVariables(){
+    teams = [];
+    players =  [];
+    rounds= [];
+    turn = null;
+    flagRoundStarted = false;
+    scoreboard = null;
+    configuration = null;
+    fillPlayers();
+    fillTeams();
+}
+
+
 
 export default class Controllers {
 
@@ -297,9 +298,12 @@ export default class Controllers {
     async startRound(req: any, res: any){
         try{
             if(!flagRoundStarted){
-                startUpConfig(req.body?.config ?? null)
+                resetVariables()
+                startUpConfig(req.body?.config)
+                getTeamTurn()
+                getPlayerTurn()
                 flagRoundStarted = true;
-                return res.json({status: 'Ok', message: 'Rodada iniciado', payload: {teams}} as ResponseMessage);
+                return res.json({status: 'Ok', message: 'Rodada iniciado'} as ResponseMessage);
             }
             else
                 throw  'a Rodada já foi iniciado, você não pode iniciar outra'
@@ -329,8 +333,8 @@ export default class Controllers {
 
             updateScoreboard()
 
-            if(configuration?.roundQtd === rounds.length){
-                return res.json({status: 'Ok', message: 'Partida Finalizada', payload: null} as ResponseMessage);
+            if((configuration?.roundQtd ?? 0) <= rounds.length){
+                return res.json({status: 'Ok', message: 'Partida Finalizada'} as ResponseMessage);
             }
 
             if(teams.length > 0){
@@ -402,6 +406,17 @@ export default class Controllers {
         }
     }
     //#endregion
+
+    async reset(req: any, res: any){
+        try{    
+            resetVariables()
+            return res.json({status: 'Ok', message: 'Reset'} as ResponseMessage);
+        }
+        catch(e){
+            //console.log(e);
+            return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
+        }
+    }
 
     
 
