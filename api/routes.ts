@@ -16,7 +16,8 @@ routes.delete("/players", controller.deletePlayer);
 //team
 routes.get("/team", controller.getTeams);
 routes.post("/team", controller.saveTeam)
-routes.put("/team", controller.updateTeam);
+//routes.put("/team", controller.updateTeam);
+routes.put("/team", controller.updateTeams);
 routes.delete("/team", controller.deleteTeam);
 
 //round

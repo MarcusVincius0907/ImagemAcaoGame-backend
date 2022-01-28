@@ -83,7 +83,7 @@ function updateTurn(){
 }
 
 function fillPlayers(){
-    players.push(new Player(0, 'Denis', 0))
+    /* players.push(new Player(0, 'Denis', 0))
     players.push(new Player(1, 'Joao', 0))
     players.push(new Player(2, 'Marcus', 0))
     players.push(new Player(3, 'Luiz', 0))
@@ -91,12 +91,18 @@ function fillPlayers(){
     players.push(new Player(0, 'Peter', 1))
     players.push(new Player(1, 'Juca', 1))
     players.push(new Player(2, 'Diego', 1))
-    players.push(new Player(3, 'Gustavo', 1))
+    players.push(new Player(3, 'Gustavo', 1)) */
+
+    players.push(new Player(0, 'Jogador 1', 0))
+    players.push(new Player(1, 'Jogador 2', 0))
+
+    players.push(new Player(0, 'Jogador 1', 1))
+    players.push(new Player(1, 'Jogador 2', 1))
 }
 
 function fillTeams(){
-    teams.push(new Team(0, 'Time A', players.slice(0, 4), 0))
-    teams.push(new Team(1, 'Time B', players.slice(4, 8), 0))
+    teams.push(new Team(0, 'Time A', players.slice(0, 2), 0))
+    teams.push(new Team(1, 'Time B', players.slice(2, 4), 0))
 }
 
 function getTeamTurn(){
@@ -148,8 +154,8 @@ function saveHistory(round: Round){
 
 fillPlayers();
 fillTeams();
-getTeamTurn()
-getPlayerTurn()
+/* getTeamTurn()
+getPlayerTurn() */
 
 export default class Controllers {
 
@@ -238,7 +244,8 @@ export default class Controllers {
 
     async saveTeam(req: any, res: any){
         try{
-            teams.push(req.body.team);
+            let newTeam = new Team(teams.length + 1, req.body.team.name, req.body.team.players )
+            teams.push(newTeam);
             return res.json({status: 'Ok', message: 'Time salvo', payload: teams} as ResponseMessage);
         }
         catch(e){
@@ -266,6 +273,17 @@ export default class Controllers {
         }
         catch(e){
             //console.log(e);
+            return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
+        }
+    }
+
+    async updateTeams(req: any, res: any){
+        try{    
+            teams = req.body.teams
+            return res.json({status: 'Ok', message: 'Time atualizado', payload: teams} as ResponseMessage);
+        }
+        catch(e){
+            console.log(e);
             return res.json({status: 'Error', message: JSON.stringify(e)} as ResponseMessage);
         }
     }
@@ -315,8 +333,10 @@ export default class Controllers {
                 return res.json({status: 'Ok', message: 'Partida Finalizada', payload: null} as ResponseMessage);
             }
 
-            getTeamTurn()
-            getPlayerTurn()
+            if(teams.length > 0){
+                getTeamTurn()
+                getPlayerTurn()
+            }
 
             
             return res.json({status: 'Ok', message: 'Próximo Round', payload: {teams}} as ResponseMessage);
