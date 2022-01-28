@@ -154,6 +154,8 @@ function resetVariables(){
     configuration = null;
     fillPlayers();
     fillTeams();
+    getTeamTurn()
+    getPlayerTurn()
 }
 
 
@@ -300,8 +302,6 @@ export default class Controllers {
             if(!flagRoundStarted){
                 resetVariables()
                 startUpConfig(req.body?.config)
-                getTeamTurn()
-                getPlayerTurn()
                 flagRoundStarted = true;
                 return res.json({status: 'Ok', message: 'Rodada iniciado'} as ResponseMessage);
             }
