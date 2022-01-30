@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.2a64b77d.css",
+    "main.js": "/static/js/main.ac421bed.js",
+    "static/media/Poppins-Regular.ttf": "/static/media/Poppins-Regular.8081832fc5cfbf634aa6.ttf",
+    "static/media/alarm-ringtone-edited.mp3": "/static/media/alarm-ringtone-edited.73cc526dcee1aa232697.mp3",
+    "index.html": "/index.html",
+    "main.2a64b77d.css.map": "/static/css/main.2a64b77d.css.map",
+    "main.ac421bed.js.map": "/static/js/main.ac421bed.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2a64b77d.css",
+    "static/js/main.ac421bed.js"
+  ]
+}
