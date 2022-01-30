@@ -95,3 +95,9 @@ export interface GameConfig{
   title: string,
   itens: [{id: number, value: number, selected: boolean}]
 }
+
+export interface Winner {
+  teamName: string,
+  score: number,
+  tie: boolean
+}

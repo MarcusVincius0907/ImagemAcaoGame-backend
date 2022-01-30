@@ -1,7 +1,8 @@
 
-import { Player, Team, Round, ResponseMessage, Scoreboard, RoundScoreInfo, Words, Turn, Configuration, GameConfig } from "./models"
+import { Player, Team, Round, ResponseMessage, Scoreboard, RoundScoreInfo, Words, Turn, Configuration, GameConfig, Winner } from "./models"
 import getWords from '../randomWordsManipulation'
 import gameConfigFile from './gameConfig'
+
 
 let teams: Team[] = []
 let players: Player[] =  []
@@ -11,6 +12,8 @@ let flagRoundStarted = false;
 let scoreboard: Scoreboard | null = null
 let configFile: GameConfig[] = JSON.parse(gameConfigFile)
 let configuration: Configuration | null = null
+let winner: Winner | null = null
+
 
 function startUpConfig(config: Configuration){
 
@@ -152,13 +155,53 @@ function resetVariables(){
     flagRoundStarted = false;
     scoreboard = null;
     configuration = null;
+    winner = null
     fillPlayers();
     fillTeams();
     getTeamTurn()
     getPlayerTurn()
 }
 
+function setWinner() {
+    let team1 = teams[0];
+    let team2 = teams[1];
+    if((team1.scoreInfo?.total && team2.scoreInfo?.total)){
 
+        if(team1.scoreInfo?.total - team2.scoreInfo?.total === 0){
+            let w = {
+                teamName: '',
+                score: 0,
+                tie: true
+            }
+            winner = w
+            return
+        }
+
+        if(team1.scoreInfo?.total > team2.scoreInfo?.total){
+            let w = {
+                teamName: team1.name,
+                score: team1.scoreInfo?.total - team2.scoreInfo?.total,
+                tie: false
+            }
+            winner = w
+        }else{
+            let w = {
+                teamName: team1.name,
+                score: team2.scoreInfo?.total - team1.scoreInfo?.total,
+                tie: false
+            }
+            winner = w
+        }
+    }
+}
+
+function formatNewTeams(nt: Team[]){
+    nt.forEach((v,i,arr) => {
+        arr[i].currentPlayer = v?.players? v?.players[0] : undefined
+        arr[i].lastPlayer = v?.players? v?.players[0] : undefined
+    })
+    teams = nt
+}
 
 export default class Controllers {
 
@@ -282,7 +325,7 @@ export default class Controllers {
 
     async updateTeams(req: any, res: any){
         try{    
-            teams = req.body.teams
+            formatNewTeams(req.body.teams)
             return res.json({status: 'Ok', message: 'Time atualizado', payload: teams} as ResponseMessage);
         }
         catch(e){
@@ -305,8 +348,11 @@ export default class Controllers {
                 flagRoundStarted = true;
                 return res.json({status: 'Ok', message: 'Rodada iniciado'} as ResponseMessage);
             }
-            else
-                throw  'a Rodada já foi iniciado, você não pode iniciar outra'
+            else{
+                /* getTeamTurn()
+                getPlayerTurn() */
+                return res.json({status: 'Error', message: JSON.stringify('a Rodada já foi iniciado, você não pode iniciar outra')} as ResponseMessage);
+            }
 
         }
         catch(e){
@@ -334,7 +380,8 @@ export default class Controllers {
             updateScoreboard()
 
             if((configuration?.roundQtd ?? 0) <= rounds.length){
-                return res.json({status: 'Ok', message: 'Partida Finalizada'} as ResponseMessage);
+                setWinner();
+                return res.json({status: 'Ok', message: 'Partida Finalizada', payload: winner} as ResponseMessage);
             }
 
             if(teams.length > 0){
@@ -343,7 +390,7 @@ export default class Controllers {
             }
 
             
-            return res.json({status: 'Ok', message: 'Próximo Round', payload: {teams}} as ResponseMessage);
+            return res.json({status: 'Ok', message: 'Próximo Round', payload: false} as ResponseMessage);
 
         }
         catch(e){

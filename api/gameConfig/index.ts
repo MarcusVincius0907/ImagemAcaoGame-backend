@@ -26,7 +26,7 @@ const gameConfigFile = ` [
     "items": [
       {
         "id": 0,
-        "value": 5,
+        "value": 6,
         "selected": true
       },
       {
