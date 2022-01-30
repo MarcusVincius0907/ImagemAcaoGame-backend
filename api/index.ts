@@ -1,22 +1,14 @@
+require('dotenv').config()
 import express from 'express';
 import routes  from './routes';
 const cors = require("cors");
 const app = express()
 const PORT = process.env.PORT || 3000;
-
-const fs = require("fs");
+app.use("/static", express.static(__dirname +'/frontend/static'));
 
 
 app.get('/', (req, res) => {
-  
-  fs.readFile('./api/index.html', function (err: any, html: any) {
-    if (err) {
-        throw err; 
-    }       
-     
-    res.write(html) 
-    res.end() 
-});
+  res.sendFile(__dirname+'/frontend/index.html')
 })
 
 app.listen(PORT, () => {
