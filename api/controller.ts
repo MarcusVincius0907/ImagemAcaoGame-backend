@@ -148,19 +148,37 @@ function saveHistory(round: Round){
 }
 
 function resetVariables(){
-    teams = [];
-    players =  [];
-    rounds= [];
+
+    if(teams.length === 0){
+        
+        teams = [];
+        players =  [];
+        fillPlayers();
+        fillTeams();
+
+    }
+
+    
+    rounds = [];
     turn = null;
     flagRoundStarted = false;
     scoreboard = null;
-    configuration = null;
+    //configuration = null;
     winner = null
-    fillPlayers();
-    fillTeams();
+   
+    resetTeam();
     getTeamTurn()
     getPlayerTurn()
 }
+
+function resetTeam(){
+    teams.forEach((team, i, arr) =>{
+        arr[i].score = 0;
+        arr[i].scoreInfo = null;
+    } );
+}
+
+
 
 function setWinner() {
     let team1 = teams[0];
@@ -180,14 +198,14 @@ function setWinner() {
         if(team1.scoreInfo?.total > team2.scoreInfo?.total){
             let w = {
                 teamName: team1.name,
-                score: team1.scoreInfo?.total - team2.scoreInfo?.total,
+                score: team1.scoreInfo?.total,
                 tie: false
             }
             winner = w
         }else{
             let w = {
-                teamName: team1.name,
-                score: team2.scoreInfo?.total - team1.scoreInfo?.total,
+                teamName: team2.name,
+                score: team2.scoreInfo?.total,
                 tie: false
             }
             winner = w
@@ -196,12 +214,23 @@ function setWinner() {
 }
 
 function formatNewTeams(nt: Team[]){
-    nt.forEach((v,i,arr) => {
-        arr[i].currentPlayer = v?.players? v?.players[0] : undefined
-        arr[i].lastPlayer = v?.players? v?.players[0] : undefined
+
+    
+    nt.forEach((team,i,arr) => {
+
+        arr[i].players?.forEach((player, indexPlayer, arrPlayer) => {
+            arrPlayer[indexPlayer].id = indexPlayer;
+            arrPlayer[indexPlayer].teamId = i;
+        })
+
+        //arr[i].currentPlayer = team?.players? team?.players[0] : undefined
+        //arr[i].lastPlayer = team?.players? team?.players[0] : undefined
+
     })
     teams = nt
 }
+
+
 
 export default class Controllers {
 
@@ -311,6 +340,7 @@ export default class Controllers {
         }
     }
 
+    //not in use
     async updateTeam(req: any, res: any){
         try{    
             teams = teams.filter(p => p.id !== req.body.team.id )

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Jogo simulando uma variância do jogo imagem e ação para curtir com os amigos!",
   "main": "index.js",
+  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./api/index.ts",
