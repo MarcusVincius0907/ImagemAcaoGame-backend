@@ -132,21 +132,30 @@ function saveHistory(round) {
     rounds.push(round);
 }
 function resetVariables() {
-    teams = [];
-    players = [];
+    if (teams.length === 0) {
+        teams = [];
+        players = [];
+        fillPlayers();
+        fillTeams();
+    }
     rounds = [];
     turn = null;
     flagRoundStarted = false;
     scoreboard = null;
-    configuration = null;
+    //configuration = null;
     winner = null;
-    fillPlayers();
-    fillTeams();
+    resetTeam();
     getTeamTurn();
     getPlayerTurn();
 }
+function resetTeam() {
+    teams.forEach((team, i, arr) => {
+        arr[i].score = 0;
+        arr[i].scoreInfo = null;
+    });
+}
 function setWinner() {
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
     let team1 = teams[0];
     let team2 = teams[1];
     if ((((_a = team1.scoreInfo) === null || _a === void 0 ? void 0 : _a.total) && ((_b = team2.scoreInfo) === null || _b === void 0 ? void 0 : _b.total))) {
@@ -162,15 +171,15 @@ function setWinner() {
         if (((_e = team1.scoreInfo) === null || _e === void 0 ? void 0 : _e.total) > ((_f = team2.scoreInfo) === null || _f === void 0 ? void 0 : _f.total)) {
             let w = {
                 teamName: team1.name,
-                score: ((_g = team1.scoreInfo) === null || _g === void 0 ? void 0 : _g.total) - ((_h = team2.scoreInfo) === null || _h === void 0 ? void 0 : _h.total),
+                score: (_g = team1.scoreInfo) === null || _g === void 0 ? void 0 : _g.total,
                 tie: false
             };
             winner = w;
         }
         else {
             let w = {
-                teamName: team1.name,
-                score: ((_j = team2.scoreInfo) === null || _j === void 0 ? void 0 : _j.total) - ((_k = team1.scoreInfo) === null || _k === void 0 ? void 0 : _k.total),
+                teamName: team2.name,
+                score: (_h = team2.scoreInfo) === null || _h === void 0 ? void 0 : _h.total,
                 tie: false
             };
             winner = w;
@@ -178,9 +187,14 @@ function setWinner() {
     }
 }
 function formatNewTeams(nt) {
-    nt.forEach((v, i, arr) => {
-        arr[i].currentPlayer = (v === null || v === void 0 ? void 0 : v.players) ? v === null || v === void 0 ? void 0 : v.players[0] : undefined;
-        arr[i].lastPlayer = (v === null || v === void 0 ? void 0 : v.players) ? v === null || v === void 0 ? void 0 : v.players[0] : undefined;
+    nt.forEach((team, i, arr) => {
+        var _a;
+        (_a = arr[i].players) === null || _a === void 0 ? void 0 : _a.forEach((player, indexPlayer, arrPlayer) => {
+            arrPlayer[indexPlayer].id = indexPlayer;
+            arrPlayer[indexPlayer].teamId = i;
+        });
+        //arr[i].currentPlayer = team?.players? team?.players[0] : undefined
+        //arr[i].lastPlayer = team?.players? team?.players[0] : undefined
     });
     teams = nt;
 }
@@ -295,6 +309,7 @@ class Controllers {
             }
         });
     }
+    //not in use
     updateTeam(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
