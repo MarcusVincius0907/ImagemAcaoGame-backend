@@ -21,7 +21,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           passphrase: ${{ secrets.SERVER_SSH_PASSPHRASE }}
           script: |
-            cd /home/projects/game/imageacaogame-backend
+            cd /home/projects/game/ImagemAcaoGame-backend
             git pull origin main
             docker-compose down
             docker-compose up --build -d
